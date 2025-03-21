@@ -1,0 +1,291 @@
+﻿<Window x:Class="HLLServerSeeder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HLLServerSeeder"
+        mc:Ignorable="d"
+        Title="HLL Server Seeder" Height="650" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E1E"
+        Foreground="White"
+        FontFamily="Segoe UI"
+        Closing="Window_Closing">
+
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#3E3E42"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#007ACC"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#0062A3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#2D2D30"/>
+                                <Setter Property="Foreground" Value="#757575"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#2D2D30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- CheckBox Style -->
+        <Style x:Key="ModernCheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- ListView Style -->
+        <Style x:Key="ModernListView" TargetType="ListView">
+            <Setter Property="Background" Value="#2D2D30"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+
+        <!-- GroupBox Style -->
+        <Style x:Key="ModernGroupBox" TargetType="GroupBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Grid.RowSpan="2" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="4" Background="{TemplateBinding Background}"/>
+                            <Border Grid.Row="0" Padding="5,2" Margin="10,0,0,0" Background="#1E1E1E">
+                                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" />
+                            </Border>
+                            <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="180"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with Logo -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+            <Border Width="48" Height="48" Background="#007ACC" CornerRadius="24" Margin="0,0,15,0">
+                <TextBlock Text="HLL" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+            <StackPanel>
+                <TextBlock Text="Hell Let Loose Server Seeder" FontSize="24" FontWeight="Bold"/>
+                <TextBlock Text="Automatically join and seed servers when population is low" Foreground="#CCCCCC" Margin="0,5,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Settings Panel -->
+        <GroupBox Grid.Row="1" Header="SETTINGS" Style="{StaticResource ModernGroupBox}" Margin="0,0,0,15">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Game Path Row -->
+                <TextBlock Text="Game Path:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                <TextBox x:Name="tbGamePath" Grid.Row="0" Grid.Column="1" Margin="0,5" Style="{StaticResource ModernTextBox}"/>
+                <Button x:Name="btnBrowseGamePath" Content="Browse..." Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource ModernButton}" Click="btnBrowseGamePath_Click"/>
+
+                <!-- Threshold Row -->
+                <TextBlock Text="Seeded Threshold:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                <TextBox x:Name="tbThreshold" Grid.Row="1" Grid.Column="1" Margin="0,5" Style="{StaticResource ModernTextBox}" TextChanged="tbThreshold_TextChanged"/>
+
+                <!-- Schedule Time Row -->
+                <TextBlock Text="Schedule Time:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0,5">
+                    <ComboBox x:Name="cbScheduleHour" Width="60" Margin="0,0,5,0" SelectedIndex="12" SelectionChanged="ScheduleTime_Changed">
+                        <ComboBoxItem Content="00"/>
+                        <ComboBoxItem Content="01"/>
+                        <ComboBoxItem Content="02"/>
+                        <ComboBoxItem Content="03"/>
+                        <ComboBoxItem Content="04"/>
+                        <ComboBoxItem Content="05"/>
+                        <ComboBoxItem Content="06"/>
+                        <ComboBoxItem Content="07"/>
+                        <ComboBoxItem Content="08"/>
+                        <ComboBoxItem Content="09"/>
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="11"/>
+                        <ComboBoxItem Content="12"/>
+                        <ComboBoxItem Content="13"/>
+                        <ComboBoxItem Content="14"/>
+                        <ComboBoxItem Content="15"/>
+                        <ComboBoxItem Content="16"/>
+                        <ComboBoxItem Content="17"/>
+                        <ComboBoxItem Content="18"/>
+                        <ComboBoxItem Content="19"/>
+                        <ComboBoxItem Content="20"/>
+                        <ComboBoxItem Content="21"/>
+                        <ComboBoxItem Content="22"/>
+                        <ComboBoxItem Content="23"/>
+                    </ComboBox>
+                    <TextBlock Text=":" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cbScheduleMinute" Width="60" SelectedIndex="0" SelectionChanged="ScheduleTime_Changed">
+                        <ComboBoxItem Content="00"/>
+                        <ComboBoxItem Content="15"/>
+                        <ComboBoxItem Content="30"/>
+                        <ComboBoxItem Content="45"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Sleep Checkbox Row -->
+                <CheckBox x:Name="cbSleepAfterSeeding" Content="Put computer to sleep after seeding" 
+              Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" 
+              Style="{StaticResource ModernCheckBox}" Checked="cbSleepAfterSeeding_Checked" Unchecked="cbSleepAfterSeeding_Checked"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Server List -->
+        <GroupBox Grid.Row="2" Header="SERVERS" Style="{StaticResource ModernGroupBox}" Margin="0,0,0,15">
+            <ListView x:Name="lvServers" Style="{StaticResource ModernListView}" Margin="0,5">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#3F3F46"/>
+                        <Setter Property="Padding" Value="10,8"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Border Width="8" Height="8" CornerRadius="4" Margin="0,0,8,0" 
+                                        Background="{Binding StatusColor}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Column="1" Text="{Binding Status}" Foreground="{Binding StatusColor}"/>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <TextBlock Text="Allied: " Foreground="#CCCCCC"/>
+                                <TextBlock Text="{Binding AlliedCount}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Orientation="Horizontal">
+                                <TextBlock Text="Axis: " Foreground="#CCCCCC"/>
+                                <TextBlock Text="{Binding AxisCount}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4" Orientation="Horizontal">
+                                <TextBlock Text="Total: " Foreground="#CCCCCC"/>
+                                <TextBlock Text="{Binding TotalCount}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </GroupBox>
+
+        <!-- Action Buttons -->
+        <UniformGrid Grid.Row="3" Rows="1" Margin="0,0,0,15">
+            <Button x:Name="btnStartSeeding" Style="{StaticResource ModernButton}" Click="btnStartSeeding_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="M12,10L20,10L20,14L12,14L12,20L4,12L12,4L12,10Z" Fill="White" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0"/>
+                    <TextBlock Text="Start Seeding"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnStopSeeding" Style="{StaticResource ModernButton}" Click="btnStopSeeding_Click" IsEnabled="False">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="M4,4L8,4L8,20L4,20L4,4M16,4L20,4L20,20L16,20L16,4" Fill="White" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0"/>
+                    <TextBlock Text="Stop Seeding"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnCreateTask" Style="{StaticResource ModernButton}" Click="btnCreateTask_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1" 
+                          Fill="White" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0"/>
+                    <TextBlock Text="Schedule Daily"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="btnDeleteTask" Style="{StaticResource ModernButton}" Click="btnDeleteTask_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" 
+                          Fill="White" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0"/>
+                    <TextBlock Text="Disable Schedule"/>
+                </StackPanel>
+            </Button>
+        </UniformGrid>
+
+        <!-- Log Output -->
+        <GroupBox Grid.Row="4" Header="LOG" Style="{StaticResource ModernGroupBox}">
+            <TextBox x:Name="tbLog" IsReadOnly="True" Style="{StaticResource ModernTextBox}" 
+                     BorderThickness="0" FontFamily="Consolas" VerticalScrollBarVisibility="Auto"/>
+        </GroupBox>
+    </Grid>
+</Window>
